@@ -17,6 +17,7 @@ env:
   global:
     # See https://git.io/vdao3 for details.
     - JOBS=1
+    - COVERAGE=true
 
 jobs:
   fail_fast: true
@@ -55,3 +56,6 @@ install:
 
 script:
   - yarn ember try:one $EMBER_TRY_SCENARIO
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -f coverage/lcov.info
