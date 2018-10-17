@@ -5,6 +5,7 @@ module.exports = {
     sourceType: "module"
   },
   plugins: ["ember", "prettier"],
+  parser: "babel-eslint",
   extends: [
     "eslint:recommended",
     "plugin:ember/recommended",
