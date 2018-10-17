@@ -1,43 +1,18 @@
 # ember-caluma-form
 
-[Short description of the addon.]
+[![Build Status](https://travis-ci.com/projectcaluma/ember-caluma-form.svg?branch=master)](https://travis-ci.com/projectcaluma/ember-caluma-form)
+[![Codecov](https://codecov.io/gh/projectcaluma/ember-caluma-form/branch/master/graph/badge.svg)](https://codecov.io/gh/projectcaluma/ember-caluma-form)
+[![dependencies Status](https://david-dm.org/projectcaluma/ember-caluma-form/status.svg)](https://david-dm.org/projectcaluma/ember-caluma-form)
+[![devDependencies Status](https://david-dm.org/projectcaluma/ember-caluma-form/dev-status.svg)](https://david-dm.org/projectcaluma/ember-caluma-form?type=dev)
+[![Code Style: Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-## Installation
+Form rendering components for [Caluma](https://projectcaluma.github.io) - a
+collaborative form editing service.
 
-```
-ember install ember-caluma-form
-```
+## Documentation
 
-## Usage
-
-[Longer description of how to use the addon in apps.]
-
-## Contributing
-
-### Installation
-
-- `git clone <repository-url>`
-- `cd ember-caluma-form`
-- `yarn install`
-
-### Linting
-
-- `yarn lint:hbs`
-- `yarn lint:js`
-- `yarn lint:js --fix`
-
-### Running tests
-
-- `ember test` – Runs the test suite on the current Ember version
-- `ember test --server` – Runs the test suite in "watch mode"
-- `ember try:each` – Runs the test suite against multiple Ember versions
-
-### Running the dummy application
-
-- `ember serve`
-- Visit the dummy application at [http://localhost:4200](http://localhost:4200).
-
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+You can find the interactive documentation [here](https://projectcaluma.github.io/ember-caluma-form).
 
 ## License
 
