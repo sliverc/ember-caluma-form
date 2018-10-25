@@ -16,7 +16,8 @@ module("Integration | Component | cf-form", function(hooks) {
       this.server.create("question", { formIds: [form.id], type: "TEXTAREA" }),
       this.server.create("question", { formIds: [form.id], type: "INTEGER" }),
       this.server.create("question", { formIds: [form.id], type: "FLOAT" }),
-      this.server.create("question", { formIds: [form.id], type: "RADIO" })
+      this.server.create("question", { formIds: [form.id], type: "RADIO" }),
+      this.server.create("question", { formIds: [form.id], type: "CHECKBOX" })
     ];
 
     const document = this.server.create("document", { formId: form.id });
@@ -33,8 +34,6 @@ module("Integration | Component | cf-form", function(hooks) {
   });
 
   test("it renders", async function(assert) {
-    assert.expect(this.questions.length + 1);
-
     await render(hbs`{{cf-form documentId=document.id}}`);
 
     assert.dom("form").exists();
@@ -48,6 +47,10 @@ module("Integration | Component | cf-form", function(hooks) {
 
       if (question.type === "RADIO") {
         assert.dom(`[name="${id}"][value="${answer.value}"]`).isChecked();
+      } else if (question.type === "CHECKBOX") {
+        answer.value.forEach(v => {
+          assert.dom(`[name="${id}"][value="${v}"]`).isChecked();
+        });
       } else {
         assert.dom(`[name="${id}"]`).hasValue(String(answer.value));
       }

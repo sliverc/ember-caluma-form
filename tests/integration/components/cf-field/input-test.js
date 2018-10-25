@@ -110,4 +110,29 @@ module("Integration | Component | cf-field/input", function(hooks) {
     assert.dom(".uk-form-controls").exists();
     assert.dom("input[type=radio][value='option-1']").isChecked();
   });
+
+  test("it renders a checkbox field", async function(assert) {
+    assert.expect(2);
+
+    await render(hbs`
+      {{cf-field/input
+        field=(hash
+          question=(hash
+            checkboxOptions=(hash
+              edges=(array
+                (hash node=(hash slug="option-1"))
+              )
+            )
+            __typename="CheckboxQuestion"
+          )
+          answer=(hash
+            listValue=(array "option-1")
+          )
+        )
+      }}
+    `);
+
+    assert.dom(".uk-form-controls").exists();
+    assert.dom("input[type=checkbox][value='option-1']").isChecked();
+  });
 });

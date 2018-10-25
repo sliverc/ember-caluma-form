@@ -26,4 +26,14 @@ fragment FieldQuestion on Question {
       }
     }
   }
+  ... on CheckboxQuestion {
+    checkboxOptions: options {
+      edges {
+        node {
+          slug
+          label
+        }
+      }
+    }
+  }
 }
