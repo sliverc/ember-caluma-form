@@ -27,7 +27,10 @@
     "ember-caluma-utils": "projectcaluma/ember-caluma-utils#master",
     "ember-cli-babel": "6.17.2",
     "ember-cli-htmlbars": "3.0.1",
-    "ember-fetch": "6.0.0"
+    "ember-fetch": "6.0.0",
+    "ember-intl": "3.4.0",
+    "ember-promise-helpers": "1.0.6",
+    "jexl": "1.1.4"
   },
   "devDependencies": {
     "@ember/optional-features": "0.7.0",
