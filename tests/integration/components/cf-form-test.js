@@ -56,4 +56,25 @@ module("Integration | Component | cf-form", function(hooks) {
       }
     });
   });
+
+  test("it renders in disabled mode", async function(assert) {
+    await render(hbs`{{cf-form disabled=true documentId=document.id}}`);
+
+    assert.dom("form").exists();
+
+    this.questions.forEach(question => {
+      const id = `Document:${this.document.id}:Question:${question.slug}`;
+      const options = this.server.db.options.filter(({ questionIds }) =>
+        questionIds.includes(question.id)
+      );
+
+      if (["RADIO", "CHECKBOX"].includes(question.type)) {
+        options.forEach(({ slug }) => {
+          assert.dom(`[name="${id}"][value="${slug}"]`).isDisabled();
+        });
+      } else {
+        assert.dom(`[name="${id}"]`).isDisabled();
+      }
+    });
+  });
 });

@@ -10,6 +10,7 @@ export default Component.extend({
   classNames: ["uk-input"],
   attributeBindings: [
     "type",
+    "disabled",
     "field.id:name",
     "field.answer.stringValue:value",
     "field.question.textMaxLength:maxlength"

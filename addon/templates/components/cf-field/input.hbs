@@ -1,3 +1,7 @@
 {{#if type}}
-  {{component (concat "cf-field/input/" type) field=field}}
+  {{component
+    (concat "cf-field/input/" type)
+    field=field
+    disabled=disabled
+  }}
 {{/if}}

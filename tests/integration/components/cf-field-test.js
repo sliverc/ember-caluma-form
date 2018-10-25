@@ -6,12 +6,11 @@ import hbs from "htmlbars-inline-precompile";
 module("Integration | Component | cf-field", function(hooks) {
   setupRenderingTest(hooks);
 
-  test("it renders", async function(assert) {
-    assert.expect(5);
-
+  hooks.beforeEach(function() {
     this.set("question", {
       slug: "question-1",
       label: "Test",
+      isRequired: "true",
       __typename: "TextQuestion"
     });
 
@@ -31,6 +30,10 @@ module("Integration | Component | cf-field", function(hooks) {
         ]
       }
     });
+  });
+
+  test("it renders", async function(assert) {
+    assert.expect(5);
 
     await render(hbs`{{cf-field document=document question=question}}`);
 
@@ -40,5 +43,19 @@ module("Integration | Component | cf-field", function(hooks) {
 
     assert.dom("label").hasText("Test");
     assert.dom("input[type=text]").hasValue("Test");
+  });
+
+  test("it renders disabled fields", async function(assert) {
+    assert.expect(1);
+
+    await render(hbs`
+      {{cf-field
+        document=document
+        question=question
+        disabled=true
+      }}
+    `);
+
+    assert.dom("input[type=text]").isDisabled();
   });
 });

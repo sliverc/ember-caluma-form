@@ -11,6 +11,7 @@ export default Component.extend({
   attributeBindings: [
     "type",
     "step",
+    "disabled",
     "field.id:name",
     "field.answer.floatValue:value",
     "field.question.floatMinValue:min",

@@ -135,4 +135,21 @@ module("Integration | Component | cf-field/input", function(hooks) {
     assert.dom(".uk-form-controls").exists();
     assert.dom("input[type=checkbox][value='option-1']").isChecked();
   });
+
+  test("it renders disabled fields", async function(assert) {
+    assert.expect(1);
+
+    await render(hbs`
+      {{cf-field/input
+        disabled=true
+        field=(hash
+          question=(hash
+            __typename="TextQuestion"
+          )
+        )
+      }}
+    `);
+
+    assert.dom("input[type=text]").isDisabled();
+  });
 });

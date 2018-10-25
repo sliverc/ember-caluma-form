@@ -44,4 +44,29 @@ module("Integration | Component | cf-field/input/radio", function(hooks) {
 
     assert.dom("label:nth-of-type(1) input[type=radio]").isChecked();
   });
+
+  test("it can be disabled", async function(assert) {
+    assert.expect(3);
+
+    await render(hbs`
+      {{cf-field/input/radio
+        disabled=true
+        field=(hash
+          question=(hash
+            radioOptions=(hash
+              edges=(array
+                (hash node=(hash slug="option-1" label="Option 1"))
+                (hash node=(hash slug="option-2" label="Option 2"))
+                (hash node=(hash slug="option-3" label="Option 3"))
+              )
+            )
+          )
+        )
+      }}
+    `);
+
+    assert.dom("label:nth-of-type(1) input[type=radio]").isDisabled();
+    assert.dom("label:nth-of-type(2) input[type=radio]").isDisabled();
+    assert.dom("label:nth-of-type(3) input[type=radio]").isDisabled();
+  });
 });

@@ -51,4 +51,29 @@ module("Integration | Component | cf-field/input/checkbox", function(hooks) {
     assert.dom("label:nth-of-type(1) input[type=checkbox]").isChecked();
     assert.dom("label:nth-of-type(2) input[type=checkbox]").isChecked();
   });
+
+  test("it can be disabled", async function(assert) {
+    assert.expect(3);
+
+    await render(hbs`
+      {{cf-field/input/checkbox
+        disabled=true
+        field=(hash
+          question=(hash
+            checkboxOptions=(hash
+              edges=(array
+                (hash node=(hash slug="option-1" label="Option 1"))
+                (hash node=(hash slug="option-2" label="Option 2"))
+                (hash node=(hash slug="option-3" label="Option 3"))
+              )
+            )
+          )
+        )
+      }}
+    `);
+
+    assert.dom("label:nth-of-type(1) input[type=checkbox]").isDisabled();
+    assert.dom("label:nth-of-type(2) input[type=checkbox]").isDisabled();
+    assert.dom("label:nth-of-type(3) input[type=checkbox]").isDisabled();
+  });
 });

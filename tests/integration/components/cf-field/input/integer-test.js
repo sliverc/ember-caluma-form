@@ -32,4 +32,12 @@ module("Integration | Component | cf-field/input/integer", function(hooks) {
     assert.dom("input").hasAttribute("max", "5");
     assert.dom("input").hasValue("3");
   });
+
+  test("it can be disabled", async function(assert) {
+    assert.expect(1);
+
+    await render(hbs`{{cf-field/input/integer disabled=true}}`);
+
+    assert.dom("input").isDisabled();
+  });
 });

@@ -29,4 +29,12 @@ module("Integration | Component | cf-field/input/text", function(hooks) {
     assert.dom("input").hasAttribute("maxlength", "5");
     assert.dom("input").hasValue("Test");
   });
+
+  test("it can be disabled", async function(assert) {
+    assert.expect(1);
+
+    await render(hbs`{{cf-field/input/text disabled=true}}`);
+
+    assert.dom("input").isDisabled();
+  });
 });

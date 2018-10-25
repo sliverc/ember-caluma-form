@@ -32,4 +32,12 @@ module("Integration | Component | cf-field/input/float", function(hooks) {
     assert.dom("input").hasAttribute("max", "1.4");
     assert.dom("input").hasValue("1.045");
   });
+
+  test("it can be disabled", async function(assert) {
+    assert.expect(1);
+
+    await render(hbs`{{cf-field/input/float disabled=true}}`);
+
+    assert.dom("input").isDisabled();
+  });
 });

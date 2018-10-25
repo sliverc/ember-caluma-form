@@ -9,7 +9,6 @@ import layout from "../templates/components/cf-field";
 export default Component.extend({
   layout,
   classNames: ["uk-margin"],
-
   fieldStore: service(),
 
   /**
