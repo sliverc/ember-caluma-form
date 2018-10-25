@@ -15,7 +15,8 @@ module("Integration | Component | cf-form", function(hooks) {
       this.server.create("question", { formIds: [form.id], type: "TEXT" }),
       this.server.create("question", { formIds: [form.id], type: "TEXTAREA" }),
       this.server.create("question", { formIds: [form.id], type: "INTEGER" }),
-      this.server.create("question", { formIds: [form.id], type: "FLOAT" })
+      this.server.create("question", { formIds: [form.id], type: "FLOAT" }),
+      this.server.create("question", { formIds: [form.id], type: "RADIO" })
     ];
 
     const document = this.server.create("document", { formId: form.id });
@@ -45,7 +46,11 @@ module("Integration | Component | cf-form", function(hooks) {
         documentId: this.document.id
       });
 
-      assert.dom(`[name="${id}"]`).hasValue(String(answer.value));
+      if (question.type === "RADIO") {
+        assert.dom(`[name="${id}"][value="${answer.value}"]`).isChecked();
+      } else {
+        assert.dom(`[name="${id}"]`).hasValue(String(answer.value));
+      }
     });
   });
 });

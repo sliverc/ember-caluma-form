@@ -85,4 +85,29 @@ module("Integration | Component | cf-field/input", function(hooks) {
     assert.dom(".uk-form-controls").exists();
     assert.dom("input[type=number]").hasValue("0.55");
   });
+
+  test("it renders a radio field", async function(assert) {
+    assert.expect(2);
+
+    await render(hbs`
+      {{cf-field/input
+        field=(hash
+          question=(hash
+            radioOptions=(hash
+              edges=(array
+                (hash node=(hash slug="option-1"))
+              )
+            )
+            __typename="RadioQuestion"
+          )
+          answer=(hash
+            stringValue="option-1"
+          )
+        )
+      }}
+    `);
+
+    assert.dom(".uk-form-controls").exists();
+    assert.dom("input[type=radio][value='option-1']").isChecked();
+  });
 });

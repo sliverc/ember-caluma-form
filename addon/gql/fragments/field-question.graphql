@@ -16,4 +16,14 @@ fragment FieldQuestion on Question {
     floatMinValue: minValue
     floatMaxValue: maxValue
   }
+  ... on RadioQuestion {
+    radioOptions: options {
+      edges {
+        node {
+          slug
+          label
+        }
+      }
+    }
+  }
 }

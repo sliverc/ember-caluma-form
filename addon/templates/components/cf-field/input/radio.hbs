@@ -1,0 +1,15 @@
+{{#each field.question.radioOptions.edges as |optionEdge i|}}
+  {{#let optionEdge.node as |option|}}
+    {{#if (gt i 0)}}<br>{{/if}}
+    <label>
+      <input
+        class="uk-radio uk-margin-small-right"
+        type="radio"
+        name={{field.id}}
+        value={{option.slug}}
+        checked={{eq option.slug field.answer.stringValue}}
+      >
+      {{option.label}}
+    </label>
+  {{/let}}
+{{/each}}
