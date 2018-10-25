@@ -1,0 +1,19 @@
+fragment FieldQuestion on Question {
+  slug
+  label
+  isRequired
+  ... on TextQuestion {
+    textMaxLength: maxLength
+  }
+  ... on TextareaQuestion {
+    textareaMaxLength: maxLength
+  }
+  ... on IntegerQuestion {
+    integerMinValue: minValue
+    integerMaxValue: maxValue
+  }
+  ... on FloatQuestion {
+    floatMinValue: minValue
+    floatMaxValue: maxValue
+  }
+}
