@@ -89,8 +89,11 @@ module("Integration | Component | cf-field/input", function(hooks) {
   test("it renders a radio field", async function(assert) {
     assert.expect(2);
 
+    this.set("noop", () => {});
+
     await render(hbs`
       {{cf-field/input
+        onSave=noop
         field=(hash
           question=(hash
             radioOptions=(hash

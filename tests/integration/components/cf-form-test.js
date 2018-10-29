@@ -1,6 +1,6 @@
 import { module, test } from "qunit";
 import { setupRenderingTest } from "ember-qunit";
-import { render } from "@ember/test-helpers";
+import { render, fillIn, click, settled } from "@ember/test-helpers";
 import hbs from "htmlbars-inline-precompile";
 import setupMirage from "ember-cli-mirage/test-support/setup-mirage";
 
@@ -12,12 +12,30 @@ module("Integration | Component | cf-form", function(hooks) {
     const form = this.server.create("form");
 
     const questions = [
-      this.server.create("question", { formIds: [form.id], type: "TEXT" }),
-      this.server.create("question", { formIds: [form.id], type: "TEXTAREA" }),
-      this.server.create("question", { formIds: [form.id], type: "INTEGER" }),
-      this.server.create("question", { formIds: [form.id], type: "FLOAT" }),
-      this.server.create("question", { formIds: [form.id], type: "RADIO" }),
-      this.server.create("question", { formIds: [form.id], type: "CHECKBOX" })
+      this.server.create("question", {
+        formIds: [form.id],
+        type: "TEXT"
+      }),
+      this.server.create("question", {
+        formIds: [form.id],
+        type: "TEXTAREA"
+      }),
+      this.server.create("question", {
+        formIds: [form.id],
+        type: "INTEGER"
+      }),
+      this.server.create("question", {
+        formIds: [form.id],
+        type: "FLOAT"
+      }),
+      this.server.create("question", {
+        formIds: [form.id],
+        type: "RADIO"
+      }),
+      this.server.create("question", {
+        formIds: [form.id],
+        type: "CHECKBOX"
+      })
     ];
 
     const document = this.server.create("document", { formId: form.id });
@@ -60,8 +78,6 @@ module("Integration | Component | cf-form", function(hooks) {
   test("it renders in disabled mode", async function(assert) {
     await render(hbs`{{cf-form disabled=true documentId=document.id}}`);
 
-    assert.dom("form").exists();
-
     this.questions.forEach(question => {
       const id = `Document:${this.document.id}:Question:${question.slug}`;
       const options = this.server.db.options.filter(({ questionIds }) =>
@@ -76,5 +92,124 @@ module("Integration | Component | cf-form", function(hooks) {
         assert.dom(`[name="${id}"]`).isDisabled();
       }
     });
+  });
+
+  test("it can save fields", async function(assert) {
+    const form = this.server.create("form");
+
+    this.server.create("question", {
+      formIds: [form.id],
+      slug: "text-question",
+      type: "TEXT"
+    });
+    this.server.create("question", {
+      formIds: [form.id],
+      slug: "textarea-question",
+      type: "TEXTAREA"
+    });
+    this.server.create("question", {
+      formIds: [form.id],
+      slug: "integer-question",
+      type: "INTEGER"
+    });
+    this.server.create("question", {
+      formIds: [form.id],
+      slug: "float-question",
+      type: "FLOAT"
+    });
+    const radioQuestion = this.server.create("question", {
+      formIds: [form.id],
+      slug: "radio-question",
+      type: "RADIO"
+    });
+    const checkboxQuestion = this.server.create("question", {
+      formIds: [form.id],
+      slug: "checkbox-question",
+      type: "CHECKBOX"
+    });
+
+    radioQuestion.options.models.forEach((option, i) => {
+      option.update({ slug: `${radioQuestion.slug}-option-${i + 1}` });
+    });
+
+    checkboxQuestion.options.models.forEach((option, i) => {
+      option.update({ slug: `${checkboxQuestion.slug}-option-${i + 1}` });
+    });
+
+    const document = this.server.create("document", { formId: form.id });
+
+    this.set("documentId", document.id);
+
+    await render(hbs`{{cf-form documentId=documentId}}`);
+
+    this.server.logging = true;
+    await fillIn(
+      `[name="Document:${document.id}:Question:text-question"]`,
+      "Text"
+    );
+    await fillIn(
+      `[name="Document:${document.id}:Question:textarea-question"]`,
+      "Textarea"
+    );
+    await fillIn(
+      `[name="Document:${document.id}:Question:integer-question"]`,
+      1
+    );
+    await fillIn(
+      `[name="Document:${document.id}:Question:float-question"]`,
+      1.1
+    );
+    await click(
+      `[name="Document:${
+        document.id
+      }:Question:radio-question"][value="radio-question-option-2"]`
+    );
+    await click(
+      `[name="Document:${
+        document.id
+      }:Question:checkbox-question"][value="checkbox-question-option-1"]`
+    );
+    await click(
+      `[name="Document:${
+        document.id
+      }:Question:checkbox-question"][value="checkbox-question-option-2"]`
+    );
+
+    await settled();
+
+    assert.deepEqual(
+      this.server.schema.documents
+        .find(document.id)
+        .answers.models.map(({ value, question: { slug } }) => ({
+          value,
+          slug
+        })),
+      [
+        {
+          slug: "text-question",
+          value: "Text"
+        },
+        {
+          slug: "textarea-question",
+          value: "Textarea"
+        },
+        {
+          slug: "integer-question",
+          value: 1
+        },
+        {
+          slug: "float-question",
+          value: 1.1
+        },
+        {
+          slug: "radio-question",
+          value: "radio-question-option-2"
+        },
+        {
+          slug: "checkbox-question",
+          value: ["checkbox-question-option-1", "checkbox-question-option-2"]
+        }
+      ]
+    );
   });
 });

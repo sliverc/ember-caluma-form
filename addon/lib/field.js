@@ -3,10 +3,16 @@ import { inject as service } from "@ember/service";
 import { assert } from "@ember/debug";
 import { getOwner } from "@ember/application";
 import { camelize } from "@ember/string";
+import { task } from "ember-concurrency";
 
 import Answer from "ember-caluma-form/lib/answer";
 import Question from "ember-caluma-form/lib/question";
 import Document from "ember-caluma-form/lib/document";
+
+import saveDocumentFloatAnswerMutation from "ember-caluma-form/gql/mutations/save-document-float-answer";
+import saveDocumentIntegerAnswerMutation from "ember-caluma-form/gql/mutations/save-document-integer-answer";
+import saveDocumentStringAnswerMutation from "ember-caluma-form/gql/mutations/save-document-string-answer";
+import saveDocumentListAnswerMutation from "ember-caluma-form/gql/mutations/save-document-list-answer";
 
 const TYPE_MAP = {
   TextQuestion: "StringAnswer",
@@ -23,6 +29,11 @@ const TYPE_MAP = {
  * @class Field
  */
 export default EmberObject.extend({
+  saveDocumentFloatAnswerMutation,
+  saveDocumentIntegerAnswerMutation,
+  saveDocumentStringAnswerMutation,
+  saveDocumentListAnswerMutation,
+
   /**
    * The Apollo GraphQL service for making requests
    *
@@ -93,5 +104,30 @@ export default EmberObject.extend({
         [camelize(__typename.replace(/Answer$/, "Value"))]: null
       }
     );
-  }).readOnly()
+  }).readOnly(),
+
+  /**
+   * Task to save a field. This uses a different mutation for every answer
+   * type.
+   *
+   * @method save
+   * @returns {Object} The response from the server
+   */
+  save: task(function*() {
+    const type = this.get("answer.__typename");
+
+    return yield this.apollo.mutate(
+      {
+        mutation: this.get(`saveDocument${type}Mutation`),
+        variables: {
+          input: {
+            question: this.get("question.slug"),
+            document: this.get("document.id"),
+            value: this.get("answer.value")
+          }
+        }
+      },
+      `saveDocument${type}.answer`
+    );
+  })
 });

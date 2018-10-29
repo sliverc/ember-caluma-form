@@ -1,16 +1,21 @@
 import { module, test } from "qunit";
 import { setupRenderingTest } from "ember-qunit";
-import { render } from "@ember/test-helpers";
+import { render, click } from "@ember/test-helpers";
 import hbs from "htmlbars-inline-precompile";
 
 module("Integration | Component | cf-field/input/radio", function(hooks) {
   setupRenderingTest(hooks);
+
+  hooks.beforeEach(function() {
+    this.set("noop", () => {});
+  });
 
   test("it renders", async function(assert) {
     assert.expect(11);
 
     await render(hbs`
       {{cf-field/input/radio
+        onSave=noop
         field=(hash
           id="test"
           answer=(hash
@@ -50,6 +55,7 @@ module("Integration | Component | cf-field/input/radio", function(hooks) {
 
     await render(hbs`
       {{cf-field/input/radio
+        onSave=noop
         disabled=true
         field=(hash
           question=(hash
@@ -68,5 +74,28 @@ module("Integration | Component | cf-field/input/radio", function(hooks) {
     assert.dom("label:nth-of-type(1) input[type=radio]").isDisabled();
     assert.dom("label:nth-of-type(2) input[type=radio]").isDisabled();
     assert.dom("label:nth-of-type(3) input[type=radio]").isDisabled();
+  });
+
+  test("it triggers save on click", async function(assert) {
+    assert.expect(1);
+
+    this.set("save", value => assert.equal(value, "option-1"));
+
+    await render(hbs`
+      {{cf-field/input/radio
+        onSave=save
+        field=(hash
+          question=(hash
+            radioOptions=(hash
+              edges=(array
+                (hash node=(hash slug="option-1" label="Option 1"))
+              )
+            )
+          )
+        )
+      }}
+    `);
+
+    await click("label:nth-of-type(1) input");
   });
 });

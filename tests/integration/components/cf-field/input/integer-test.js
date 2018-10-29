@@ -1,6 +1,6 @@
 import { module, test } from "qunit";
 import { setupRenderingTest } from "ember-qunit";
-import { render } from "@ember/test-helpers";
+import { render, fillIn } from "@ember/test-helpers";
 import hbs from "htmlbars-inline-precompile";
 
 module("Integration | Component | cf-field/input/integer", function(hooks) {
@@ -39,5 +39,15 @@ module("Integration | Component | cf-field/input/integer", function(hooks) {
     await render(hbs`{{cf-field/input/integer disabled=true}}`);
 
     assert.dom("input").isDisabled();
+  });
+
+  test("it triggers save on input", async function(assert) {
+    assert.expect(1);
+
+    this.set("save", value => assert.equal(value, 1));
+
+    await render(hbs`{{cf-field/input/integer onSave=save}}`);
+
+    await fillIn("input", 1);
   });
 });

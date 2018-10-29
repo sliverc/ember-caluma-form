@@ -1,6 +1,6 @@
 import { module, test } from "qunit";
 import { setupRenderingTest } from "ember-qunit";
-import { render } from "@ember/test-helpers";
+import { render, fillIn } from "@ember/test-helpers";
 import hbs from "htmlbars-inline-precompile";
 
 module("Integration | Component | cf-field/input/textarea", function(hooks) {
@@ -35,5 +35,15 @@ module("Integration | Component | cf-field/input/textarea", function(hooks) {
     await render(hbs`{{cf-field/input/textarea disabled=true}}`);
 
     assert.dom("textarea").isDisabled();
+  });
+
+  test("it triggers save on input", async function(assert) {
+    assert.expect(1);
+
+    this.set("save", value => assert.equal(value, "Test"));
+
+    await render(hbs`{{cf-field/input/textarea onSave=save}}`);
+
+    await fillIn("textarea", "Test");
   });
 });

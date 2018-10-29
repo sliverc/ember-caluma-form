@@ -1,6 +1,6 @@
 import { module, test } from "qunit";
 import { setupRenderingTest } from "ember-qunit";
-import { render } from "@ember/test-helpers";
+import { render, click } from "@ember/test-helpers";
 import hbs from "htmlbars-inline-precompile";
 
 module("Integration | Component | cf-field/input/checkbox", function(hooks) {
@@ -75,5 +75,40 @@ module("Integration | Component | cf-field/input/checkbox", function(hooks) {
     assert.dom("label:nth-of-type(1) input[type=checkbox]").isDisabled();
     assert.dom("label:nth-of-type(2) input[type=checkbox]").isDisabled();
     assert.dom("label:nth-of-type(3) input[type=checkbox]").isDisabled();
+  });
+
+  test("it triggers save on click", async function(assert) {
+    assert.expect(3);
+
+    this.set("listValue", []);
+    this.set("save", value => this.set("listValue", value));
+
+    await render(hbs`
+      {{cf-field/input/checkbox
+        onSave=save
+        field=(hash
+          answer=(hash
+            listValue=listValue
+          )
+          question=(hash
+            checkboxOptions=(hash
+              edges=(array
+                (hash node=(hash slug="option-1" label="Option 1"))
+                (hash node=(hash slug="option-2" label="Option 2"))
+              )
+            )
+          )
+        )
+      }}
+    `);
+
+    await click("label:nth-of-type(1) input");
+    assert.deepEqual(this.listValue, ["option-1"]);
+
+    await click("label:nth-of-type(2) input");
+    assert.deepEqual(this.listValue, ["option-1", "option-2"]);
+
+    await click("label:nth-of-type(1) input");
+    assert.deepEqual(this.listValue, ["option-2"]);
   });
 });

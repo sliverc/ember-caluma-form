@@ -9,6 +9,7 @@
         value={{option.slug}}
         checked={{eq option.slug field.answer.stringValue}}
         disabled={{disabled}}
+        onchange={{action onSave option.slug}}
       >
       {{option.label}}
     </label>
