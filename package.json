@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "ember-apollo-client": "2.0.0-beta.1",
-    "ember-auto-import": "1.2.13",
+    "ember-auto-import": "1.2.15",
     "ember-caluma-utils": "projectcaluma/ember-caluma-utils#master",
     "ember-cli-babel": "6.17.2",
     "ember-cli-htmlbars": "3.0.1",
