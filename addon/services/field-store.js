@@ -47,7 +47,7 @@ export default Service.extend({
    * @param {Object} question The question of the field
    * @param {Object} document The document
    * @return {Field} The built field
-   * @private
+   * @internal
    */
   _build(question, document) {
     const answer = document.answers.edges.find(
