@@ -50,11 +50,7 @@ export default Service.extend({
    */
   _build(question, document) {
     const answer = document.answers.edges.find(
-      ({
-        node: {
-          question: { slug }
-        }
-      }) => slug === question.slug
+      ({ node }) => node.question.slug === question.slug
     );
 
     return Field.create(getOwner(this).ownerInjection(), {
