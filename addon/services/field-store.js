@@ -1,6 +1,5 @@
 import Service from "@ember/service";
 import { computed } from "@ember/object";
-import { A } from "@ember/array";
 import { getOwner } from "@ember/application";
 
 import Field from "ember-caluma-form/lib/field";
@@ -14,9 +13,9 @@ export default Service.extend({
    * The actual store of all present fields
    *
    * @accessor fields
-   * @type {Ember.Array}
+   * @type {Array}
    */
-  fields: computed(() => A([])).readOnly(),
+  fields: computed(() => []).readOnly(),
 
   /**
    * Find a field in the cache or build it and put it in the cache.
@@ -32,7 +31,7 @@ export default Service.extend({
     );
 
     if (!cached) {
-      this.fields.pushObject(this._build(question, document));
+      this.fields.push(this._build(question, document));
 
       return this.find(question, document);
     }
