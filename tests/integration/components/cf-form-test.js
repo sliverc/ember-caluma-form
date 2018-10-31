@@ -100,22 +100,28 @@ module("Integration | Component | cf-form", function(hooks) {
     this.server.create("question", {
       formIds: [form.id],
       slug: "text-question",
-      type: "TEXT"
+      type: "TEXT",
+      maxLength: null
     });
     this.server.create("question", {
       formIds: [form.id],
       slug: "textarea-question",
-      type: "TEXTAREA"
+      type: "TEXTAREA",
+      maxLength: null
     });
     this.server.create("question", {
       formIds: [form.id],
       slug: "integer-question",
-      type: "INTEGER"
+      type: "INTEGER",
+      minValue: null,
+      maxValue: null
     });
     this.server.create("question", {
       formIds: [form.id],
       slug: "float-question",
-      type: "FLOAT"
+      type: "FLOAT",
+      minValue: null,
+      maxValue: null
     });
     const radioQuestion = this.server.create("question", {
       formIds: [form.id],
@@ -142,7 +148,6 @@ module("Integration | Component | cf-form", function(hooks) {
 
     await render(hbs`{{cf-form documentId=documentId}}`);
 
-    this.server.logging = true;
     await fillIn(
       `[name="Document:${document.id}:Question:text-question"]`,
       "Text"

@@ -9,6 +9,7 @@ import Component from "@ember/component";
 export default Component.extend({
   tagName: "input",
   classNames: ["uk-input"],
+  classNameBindings: ["field.isInvalid:uk-form-danger"],
   attributeBindings: [
     "type",
     "disabled",

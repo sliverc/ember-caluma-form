@@ -10,8 +10,12 @@
       {{uk-spinner class="uk-animation-fade"}}
     {{else if (or field.save.last.isSuccessful field.answer.value)}}
       {{uk-icon "check" class="uk-animation-fade uk-text-success"}}
-    {{else if field.save.last.isError}}
+    {{else if (or field.save.last.isError field.isInvalid)}}
       {{uk-icon "warning" class="uk-animation-fade uk-text-danger"}}
     {{/if}}
   </div>
 </div>
+
+{{#if field.errors.length}}
+  {{cf-field/errors field=field}}
+{{/if}}

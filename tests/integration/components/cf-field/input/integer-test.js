@@ -50,4 +50,14 @@ module("Integration | Component | cf-field/input/integer", function(hooks) {
 
     await fillIn("input", 1);
   });
+
+  test("it does not allow non integer input", async function(assert) {
+    assert.expect(1);
+
+    this.set("save", value => assert.equal(value, null));
+
+    await render(hbs`{{cf-field/input/integer onSave=save}}`);
+
+    await fillIn("input", "Test");
+  });
 });

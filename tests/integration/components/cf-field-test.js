@@ -1,6 +1,6 @@
 import { module, test } from "qunit";
 import { setupRenderingTest } from "ember-qunit";
-import { render } from "@ember/test-helpers";
+import { render, fillIn } from "@ember/test-helpers";
 import hbs from "htmlbars-inline-precompile";
 
 module("Integration | Component | cf-field", function(hooks) {
@@ -11,6 +11,7 @@ module("Integration | Component | cf-field", function(hooks) {
       slug: "question-1",
       label: "Test",
       isRequired: "true",
+      textMaxLength: 2,
       __typename: "TextQuestion"
     });
 
@@ -57,5 +58,22 @@ module("Integration | Component | cf-field", function(hooks) {
     `);
 
     assert.dom("input[type=text]").isDisabled();
+  });
+
+  test("it validates input", async function(assert) {
+    assert.expect(1);
+
+    await render(hbs`
+      {{cf-field
+        document=document
+        question=question
+      }}
+    `);
+
+    await fillIn("input", "Test");
+
+    assert
+      .dom("span.uk-text-danger")
+      .hasText("The value of this field can't be longer than 2 characters");
   });
 });

@@ -63,6 +63,12 @@ export default Component.extend({
 
     answer.set("value", value);
 
+    yield this.field.validate.perform();
+
+    if (this.field.isInvalid) {
+      return;
+    }
+
     const response = yield this.field.save.unlinked().perform();
 
     answer.setProperties(response);

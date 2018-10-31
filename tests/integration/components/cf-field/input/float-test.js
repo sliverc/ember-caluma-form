@@ -50,4 +50,14 @@ module("Integration | Component | cf-field/input/float", function(hooks) {
 
     await fillIn("input", 1.5);
   });
+
+  test("it does not allow non float input", async function(assert) {
+    assert.expect(1);
+
+    this.set("save", value => assert.equal(value, null));
+
+    await render(hbs`{{cf-field/input/float onSave=save}}`);
+
+    await fillIn("input", "Test");
+  });
 });

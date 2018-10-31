@@ -9,6 +9,7 @@ import Component from "@ember/component";
 export default Component.extend({
   tagName: "input",
   classNames: ["uk-input"],
+  classNameBindings: ["field.isInvalid:uk-form-danger"],
   attributeBindings: [
     "type",
     "step",
@@ -30,6 +31,6 @@ export default Component.extend({
    * @param {String} e.target.value The current value of the field
    */
   input({ target: { value } }) {
-    this.onSave(parseFloat(value));
+    this.onSave(parseFloat(value) || null);
   }
 });
