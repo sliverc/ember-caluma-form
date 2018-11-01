@@ -67,19 +67,12 @@ module("Unit | Library | field", function(hooks) {
   });
 
   test("it throws and error if arguments are missing", function(assert) {
-    assert.expect(3);
+    assert.expect(2);
 
     assert.throws(() => Field.create(), /Owner must be injected/);
     assert.throws(
       () => Field.create(this.owner.ownerInjection()),
       /_question must be passed/
-    );
-    assert.throws(
-      () =>
-        Field.create(this.owner.ownerInjection(), {
-          _question: this.question
-        }),
-      /_document must be passed/
     );
   });
 

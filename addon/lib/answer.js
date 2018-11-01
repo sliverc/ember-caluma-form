@@ -25,8 +25,6 @@ export default EmberObject.extend({
    * answer.
    *
    * @property {String|Number|String[]} value
-   * @accessor
-   * @set
    */
   value: computed(
     "_valueKey",

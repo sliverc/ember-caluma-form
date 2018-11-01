@@ -10,7 +10,6 @@ import { validate } from "ember-validators";
 
 import Answer from "ember-caluma-form/lib/answer";
 import Question from "ember-caluma-form/lib/question";
-import Document from "ember-caluma-form/lib/document";
 
 import saveDocumentFloatAnswerMutation from "ember-caluma-form/gql/mutations/save-document-float-answer";
 import saveDocumentIntegerAnswerMutation from "ember-caluma-form/gql/mutations/save-document-integer-answer";
@@ -65,7 +64,6 @@ export default EmberObject.extend({
 
     assert("Owner must be injected!", getOwner(this));
     assert("_question must be passed!", this._question);
-    assert("_document must be passed!", this._document);
 
     this.set("_errors", []);
   },
@@ -80,16 +78,6 @@ export default EmberObject.extend({
    */
   id: computed("document.id", "question.slug", function() {
     return `Document:${this.document.id}:Question:${this.question.slug}`;
-  }).readOnly(),
-
-  /**
-   * The computed document object
-   *
-   * @property {Document} document
-   * @accessor
-   */
-  document: computed("_document", function() {
-    return Document.create(getOwner(this).ownerInjection(), this._document);
   }).readOnly(),
 
   /**
@@ -156,7 +144,7 @@ export default EmberObject.extend({
    * type.
    *
    * @method save
-   * @returns {Object} The response from the server
+   * @return {Object} The response from the server
    */
   save: task(function*() {
     const type = this.get("answer.__typename");
@@ -206,7 +194,7 @@ export default EmberObject.extend({
    * Method to validate if a question is required or not.
    *
    * @method _validateRequired
-   * @returns {RSVP.Promise} Returns an promise which resolves into an object if invalid or true if valid
+   * @return {RSVP.Promise} Returns an promise which resolves into an object if invalid or true if valid
    * @internal
    */
   async _validateRequired() {
@@ -221,7 +209,7 @@ export default EmberObject.extend({
    * predefined by the question.
    *
    * @method _validateTextQuestion
-   * @returns {Object|Boolean} Returns an object if invalid or true if valid
+   * @return {Object|Boolean} Returns an object if invalid or true if valid
    * @internal
    */
   _validateTextQuestion() {
@@ -235,7 +223,7 @@ export default EmberObject.extend({
    * than predefined by the question.
    *
    * @method _validateTextareaQuestion
-   * @returns {Object|Boolean} Returns an object if invalid or true if valid
+   * @return {Object|Boolean} Returns an object if invalid or true if valid
    * @internal
    */
   _validateTextareaQuestion() {
@@ -249,7 +237,7 @@ export default EmberObject.extend({
    * or less than the options provided by the question.
    *
    * @method _validateIntegerQuestion
-   * @returns {Object|Boolean} Returns an object if invalid or true if valid
+   * @return {Object|Boolean} Returns an object if invalid or true if valid
    * @internal
    */
   _validateIntegerQuestion() {
@@ -265,7 +253,7 @@ export default EmberObject.extend({
    * less than the options provided by the question.
    *
    * @method _validateFloatQuestion
-   * @returns {Object|Boolean} Returns an object if invalid or true if valid
+   * @return {Object|Boolean} Returns an object if invalid or true if valid
    * @internal
    */
   _validateFloatQuestion() {
@@ -280,7 +268,7 @@ export default EmberObject.extend({
    * in the provided options of the question.
    *
    * @method _validateRadioQuestion
-   * @returns {Object|Boolean} Returns an object if invalid or true if valid
+   * @return {Object|Boolean} Returns an object if invalid or true if valid
    * @internal
    */
   _validateRadioQuestion() {
@@ -296,7 +284,7 @@ export default EmberObject.extend({
    * values are included in the provided options of the question.
    *
    * @method _validateCheckboxQuestion
-   * @returns {Object[]|Boolean[]|Mixed[]} Returns per value an object if invalid or true if valid
+   * @return {Object[]|Boolean[]|Mixed[]} Returns per value an object if invalid or true if valid
    * @internal
    */
   _validateCheckboxQuestion() {
