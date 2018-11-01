@@ -1,6 +1,13 @@
 import Parser from "jexl/lib/parser/Parser";
 import jexl from "jexl";
 
+/**
+ * Transform a JEXL expression into it's AST
+ *
+ * @function getAST
+ * @param {String} expression JEXL expression
+ * @return {Object} AST
+ */
 export const getAST = expression => {
   let grammar = jexl._getGrammar();
   let parser = new Parser(grammar);

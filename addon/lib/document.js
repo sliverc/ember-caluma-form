@@ -32,8 +32,7 @@ export default EmberObject.extend(Evented, {
     fields.forEach(field => this.fields.push(field));
 
     for (let field of fields) {
-      await field.question.hiddenTask.perform();
-      await field.question.optionalTask.perform();
+      await field.question.initDynamicFields();
     }
   },
 
@@ -58,7 +57,7 @@ export default EmberObject.extend(Evented, {
       field.question.dependsOn.includes(slug)
     );
 
+    // update hidden state of those fields
     dependentFields.forEach(field => field.question.hiddenTask.perform());
-    // update hidden of those fields
   })
 });

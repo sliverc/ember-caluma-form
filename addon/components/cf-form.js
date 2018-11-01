@@ -40,6 +40,12 @@ export default Component.extend(ComponentQueryManager, {
     );
   }),
 
+  /**
+   * Transform raw data into document object
+   *
+   * @property {Document} document
+   * @accessor
+   */
   document: computed("data.lastSuccessful.value", function() {
     return (
       this.get("data.lastSuccessful.value") &&
@@ -47,5 +53,5 @@ export default Component.extend(ComponentQueryManager, {
         this.get("data.lastSuccessful.value.firstObject.node")
       )
     );
-  })
+  }).readOnly()
 });
