@@ -1,27 +1,44 @@
 import { module, test } from "qunit";
 import { setupTest } from "ember-qunit";
-import Question from "ember-caluma-form/lib/question";
+import Document from "ember-caluma-form/lib/document";
 
 module("Unit | Library | question", function(hooks) {
   setupTest(hooks);
 
-  test("it works", async function(assert) {
-    assert.expect(1);
+  hooks.beforeEach(function() {
+    const raw = {
+      id: 1,
+      answers: {
+        edges: []
+      },
+      form: {
+        questions: {
+          edges: [
+            {
+              node: {
+                slug: "question-1",
+                label: "Test",
+                isRequired: "true",
+                isHidden: "true",
+                __typename: "TextQuestion"
+              }
+            }
+          ]
+        }
+      }
+    };
 
-    const question = Question.create({});
-
-    assert.ok(question);
+    const document = Document.create(this.owner.ownerInjection(), { raw });
+    this.set("question", document.fields[0].question);
   });
 
   test("it computes optional", async function(assert) {
     assert.expect(2);
 
-    let question = Question.create({ isRequired: "true" });
+    assert.equal(await this.question.optionalTask.perform(), false);
 
-    assert.equal(await question.optional, false);
+    this.question.set("isRequired", "false");
 
-    question.set("isRequired", "false");
-
-    assert.equal(await question.optional, true);
+    assert.equal(await this.question.optionalTask.perform(), true);
   });
 });

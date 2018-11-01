@@ -34,18 +34,10 @@ export default EmberObject.extend({
    * @accessor
    */
   dependsOn: computed("isHidden", function() {
-    let iterator = getTransforms(getAST(this.isHidden));
-    let result = iterator.next();
-    let transforms = [];
-
-    while (!result.done) {
-      transforms.push(result.value);
-
-      result = iterator.next();
-    }
-
-    return transforms.map(transform => transform.subject.value);
-  }),
+    return getTransforms(getAST(this.isHidden)).map(
+      transform => transform.subject.value
+    );
+  }).readOnly(),
 
   /**
    * Evaluate the question's hidden state.

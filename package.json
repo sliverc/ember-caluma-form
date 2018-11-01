@@ -19,6 +19,7 @@
     "start": "ember serve",
     "start-proxy": "ember serve --proxy http://localhost:8000",
     "test": "ember test",
+    "test-dev": "COVERAGE=true ember test -s",
     "test:all": "ember try:each"
   },
   "dependencies": {
