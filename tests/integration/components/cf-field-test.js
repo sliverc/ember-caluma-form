@@ -32,6 +32,7 @@ module("Integration | Component | cf-field", function(hooks) {
                   slug: "question-1",
                   label: "Test",
                   isRequired: "true",
+                  isHidden: "true",
                   textMaxLength: 2,
                   __typename: "TextQuestion"
                 }

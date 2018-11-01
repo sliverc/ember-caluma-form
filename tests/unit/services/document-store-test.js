@@ -27,6 +27,8 @@ module("Unit | Service | document-store", function(hooks) {
               node: {
                 slug: "question-1",
                 label: "Question 1",
+                isHidden: "false",
+                isRequired: "false",
                 __typename: "TextQuestion"
               }
             }

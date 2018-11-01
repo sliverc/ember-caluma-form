@@ -41,11 +41,11 @@ export default EmberObject.extend(Evented, {
   questionJexl: computed(function() {
     const questionJexl = new jexl.Jexl();
 
-    questionJexl.addTransform("answer", slug => {
-      const field = this.fields.find(field => field.question.slug === slug);
-
-      return field.answer.value;
-    });
+    questionJexl.addTransform(
+      "answer",
+      slug =>
+        this.fields.find(field => field.question.slug === slug).answer.value
+    );
 
     return questionJexl;
   }),

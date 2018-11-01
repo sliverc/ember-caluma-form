@@ -7,7 +7,7 @@ import { task, timeout } from "ember-concurrency";
  * Component to display a label and input for a certain field of a document.
  *
  * ```hbs
- * {{cf-field question=someQuestion document=someDocument}}
+ * {{cf-field field=someField}}
  * ```
  *
  * You can disable the field by passing `disabled=true`.

@@ -21,19 +21,41 @@ export const getAST = expression => {
  * Generator to walk down a JEXL AST tree and yield all transforms
  *
  * @generator
- * @function getTransforms
+ * @private
+ * @function traverseTransforms
  * @param {Object} tree The JEXL AST tree or branch
  * @yields {Object} The found transform
  */
-export const getTransforms = function*(tree) {
+const traverseTransforms = function*(tree) {
   for (let node of Object.values(tree)) {
     if (typeof node === "object") {
-      yield* getTransforms(node);
+      yield* traverseTransforms(node);
     }
   }
   if (tree.type && tree.type === "Transform") {
     yield { name: tree.name, subject: tree.subject, args: tree.args };
   }
+};
+
+/**
+ * Get all transforms in a JEXL AST tree
+ *
+ * @function getTransforms
+ * @param {Object} tree The JEXL AST tree or branch
+ * @return {Object[]} The found transforms
+ */
+export const getTransforms = tree => {
+  let iterator = traverseTransforms(tree);
+  let result = iterator.next();
+  let transforms = [];
+
+  while (!result.done) {
+    transforms.push(result.value);
+
+    result = iterator.next();
+  }
+
+  return transforms;
 };
 
 export default { getTransforms, getAST };

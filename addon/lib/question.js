@@ -3,6 +3,7 @@ import { next } from "@ember/runloop";
 import { lastValue } from "ember-caluma-form/utils/concurrency";
 import { getAST, getTransforms } from "ember-caluma-form/utils/jexl";
 import { task } from "ember-concurrency";
+import { assert } from "@ember/debug";
 
 /**
  * Object which represents a question in context of a field
@@ -34,18 +35,21 @@ export default EmberObject.extend({
    * @accessor
    */
   dependsOn: computed("isHidden", function() {
-    let iterator = getTransforms(getAST(this.isHidden));
-    let result = iterator.next();
-    let transforms = [];
-
-    while (!result.done) {
-      transforms.push(result.value);
-
-      result = iterator.next();
-    }
-
-    return transforms.map(transform => transform.subject.value);
-  }),
+    const dependents = [
+      ...new Set(
+        getTransforms(getAST(this.isHidden))
+          .filter(transform => transform.name === "answer")
+          .map(transform => transform.subject.value)
+      )
+    ];
+    dependents.forEach(slug => {
+      assert(
+        `Field "${slug}" is not present in this document`,
+        this.document.fields.find(field => field.question.slug === slug)
+      );
+    });
+    return dependents;
+  }).readOnly(),
 
   /**
    * Evaluate the question's hidden state.
@@ -70,7 +74,7 @@ export default EmberObject.extend({
     hidden =
       hidden || (yield this.field.document.questionJexl.eval(this.isHidden));
 
-    if (this.hidden !== hidden) {
+    if (this.get("hiddenTask.lastSuccessful.value") !== hidden) {
       next(this, () =>
         this.document.trigger("hiddenChanged", this.slug, hidden)
       );
