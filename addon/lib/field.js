@@ -65,7 +65,33 @@ export default EmberObject.extend({
     assert("Owner must be injected!", getOwner(this));
     assert("_question must be passed!", this._question);
 
-    this.set("_errors", []);
+    const __typename = TYPE_MAP[this._question.__typename];
+
+    const question = Question.create(
+      getOwner(this).ownerInjection(),
+      Object.assign(this._question, {
+        document: this.document,
+        field: this
+      })
+    );
+
+    const answer = Answer.create(
+      getOwner(this).ownerInjection(),
+      Object.assign(
+        this._answer || {
+          __typename,
+          question: { slug: this._question.slug },
+          [camelize(__typename.replace(/Answer$/, "Value"))]: null
+        },
+        { document: this.document, field: this }
+      )
+    );
+
+    this.setProperties({
+      _errors: [],
+      question,
+      answer
+    });
   },
 
   /**
@@ -78,34 +104,6 @@ export default EmberObject.extend({
    */
   id: computed("document.id", "question.slug", function() {
     return `Document:${this.document.id}:Question:${this.question.slug}`;
-  }).readOnly(),
-
-  /**
-   * The computed question object
-   *
-   * @property {Question} question
-   * @accessor
-   */
-  question: computed("_question", function() {
-    return Question.create(getOwner(this).ownerInjection(), this._question);
-  }).readOnly(),
-
-  /**
-   * The computed answer object
-   *
-   * @property {Answer} answer
-   * @accessor
-   */
-  answer: computed("_answer", "_question.__typename", function() {
-    const __typename = TYPE_MAP[this.question.__typename];
-
-    return Answer.create(
-      getOwner(this).ownerInjection(),
-      this._answer || {
-        __typename,
-        [camelize(__typename.replace(/Answer$/, "Value"))]: null
-      }
-    );
   }).readOnly(),
 
   /**

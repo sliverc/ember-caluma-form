@@ -11,7 +11,7 @@ export default Service.extend({
   /**
    * The actual store of all present documents
    *
-   * @property {Array} documents
+   * @property {Document[]} documents
    * @accessor
    */
   documents: computed(() => []).readOnly(),

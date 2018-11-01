@@ -2,6 +2,7 @@ fragment FieldQuestion on Question {
   slug
   label
   isRequired
+  isHidden
   ... on TextQuestion {
     textMaxLength: maxLength
   }

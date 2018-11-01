@@ -1,5 +1,6 @@
 import EmberObject, { computed } from "@ember/object";
 import { camelize } from "@ember/string";
+import { next } from "@ember/runloop";
 
 /**
  * Object which represents an answer in context of a field
@@ -38,6 +39,10 @@ export default EmberObject.extend({
       },
       set(_, value) {
         this.set(this._valueKey, value);
+
+        next(this, () =>
+          this.document.trigger("valueChanged", this.question.slug, value)
+        );
 
         return value;
       }

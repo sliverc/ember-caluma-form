@@ -1,21 +1,61 @@
 export default function(server) {
+  server.logging = false;
+
   const form = server.create("form");
 
-  const questions = [
-    server.create("question", { formIds: [form.id], type: "TEXT" }),
-    server.create("question", { formIds: [form.id], type: "TEXTAREA" }),
-    server.create("question", { formIds: [form.id], type: "INTEGER" }),
-    server.create("question", { formIds: [form.id], type: "FLOAT" }),
-    server.create("question", { formIds: [form.id], type: "RADIO" }),
-    server.create("question", { formIds: [form.id], type: "CHECKBOX" })
-  ];
-
-  const document = server.create("document", { formId: form.id });
-
-  questions.forEach(question => {
-    server.create("answer", {
-      questionId: question.id,
-      documentId: document.id
-    });
+  server.create("question", {
+    slug: "name",
+    label: "What is your name?",
+    formIds: [form.id],
+    type: "TEXT",
+    maxLength: null
   });
+  server.create("question", {
+    slug: "description",
+    label: "Describe yourself.",
+    formIds: [form.id],
+    type: "TEXTAREA",
+    maxLength: 255
+  });
+  server.create("question", {
+    slug: "age",
+    label: "What is your age?",
+    formIds: [form.id],
+    type: "INTEGER",
+    minValue: 0,
+    maxValue: null
+  });
+  server.create("question", {
+    slug: "height",
+    label: "How tall are you in meters?",
+    formIds: [form.id],
+    type: "FLOAT",
+    minValue: 0,
+    maxValue: null,
+    isHidden: "'age'|answer < 18"
+  });
+  server.create("question", {
+    slug: "like-caluma",
+    label: "Do you like Caluma?",
+    type: "RADIO",
+    formIds: [form.id],
+    options: [
+      server.create("option", { label: "Yes" }),
+      server.create("option", { label: "Hell yes" })
+    ]
+  });
+  server.create("question", {
+    slug: "short-reason",
+    label: "Why so short?",
+    formIds: [form.id],
+    type: "CHECKBOX",
+    isHidden: "'height'|answer > 1.6",
+    options: [
+      server.create("option", { label: "Moms fault" }),
+      server.create("option", { label: "Dads fault" }),
+      server.create("option", { label: "Not enough vegetables" })
+    ]
+  });
+
+  server.create("document", { formId: form.id });
 }

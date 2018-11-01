@@ -18,6 +18,7 @@ import { task, timeout } from "ember-concurrency";
 export default Component.extend({
   layout,
   classNames: ["uk-margin"],
+  classNameBindings: ["field.question.hidden:uk-hidden"],
 
   /**
    * Task to save a field. This will set the passed value to the answer and
