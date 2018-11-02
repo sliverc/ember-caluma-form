@@ -1,6 +1,4 @@
 import Component from "@ember/component";
-import { computed } from "@ember/object";
-import { inject as service } from "@ember/service";
 import { getOwner } from "@ember/application";
 import layout from "../templates/components/cf-field";
 import { task, timeout } from "ember-concurrency";
@@ -9,37 +7,18 @@ import { task, timeout } from "ember-concurrency";
  * Component to display a label and input for a certain field of a document.
  *
  * ```hbs
- * {{cf-field question=someQuestion document=someDocument}}
+ * {{cf-field field=someField}}
  * ```
  *
  * You can disable the field by passing `disabled=true`.
  *
  * @class CfFieldComponent
- * @argument {Object} question The question for the field
- * @argument {Object} document The document context for the field
+ * @argument {Field} field The field data model to render
  */
 export default Component.extend({
   layout,
   classNames: ["uk-margin"],
-  fieldStore: service(),
-
-  /**
-   * @argument {Object} question
-   */
-  question: null,
-
-  /**
-   * @argument {Object} document
-   */
-  document: null,
-
-  /**
-   * @property {Field} field
-   * @accessor
-   */
-  field: computed("question.slug", "document.id", function() {
-    return this.fieldStore.find(this.question, this.document);
-  }).readOnly(),
+  classNameBindings: ["field.question.hidden:uk-hidden"],
 
   /**
    * Task to save a field. This will set the passed value to the answer and

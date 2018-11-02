@@ -1,7 +1,3 @@
-{{#let data.lastSuccessful.value.firstObject.node as |document|}}
-  {{#each document.form.questions.edges as |questionEdge|}}
-    {{#let questionEdge.node as |question|}}
-      {{cf-field question=question document=document disabled=disabled}}
-    {{/let}}
-  {{/each}}
-{{/let}}
+{{#each document.fields as |field|}}
+  {{cf-field field=field disabled=disabled}}
+{{/each}}

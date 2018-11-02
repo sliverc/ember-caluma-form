@@ -1,5 +1,6 @@
 import Component from "@ember/component";
 import { inject as service } from "@ember/service";
+import { computed } from "@ember/object";
 import { ComponentQueryManager } from "ember-apollo-client";
 import { task } from "ember-concurrency";
 import layout from "../templates/components/cf-form";
@@ -22,6 +23,7 @@ export default Component.extend(ComponentQueryManager, {
   layout,
   tagName: "form",
   apollo: service(),
+  documentStore: service(),
 
   willInsertElement() {
     this.data.perform();
@@ -36,5 +38,20 @@ export default Component.extend(ComponentQueryManager, {
       },
       "allDocuments.edges"
     );
-  })
+  }),
+
+  /**
+   * Transform raw data into document object
+   *
+   * @property {Document} document
+   * @accessor
+   */
+  document: computed("data.lastSuccessful.value", function() {
+    return (
+      this.get("data.lastSuccessful.value") &&
+      this.documentStore.find(
+        this.get("data.lastSuccessful.value.firstObject.node")
+      )
+    );
+  }).readOnly()
 });

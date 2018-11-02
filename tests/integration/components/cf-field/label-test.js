@@ -2,23 +2,42 @@ import { module, test } from "qunit";
 import { setupRenderingTest } from "ember-qunit";
 import { render, settled } from "@ember/test-helpers";
 import hbs from "htmlbars-inline-precompile";
-import Question from "ember-caluma-form/lib/question";
+import Document from "ember-caluma-form/lib/document";
 
 module("Integration | Component | cf-field/label", function(hooks) {
   setupRenderingTest(hooks);
 
+  hooks.beforeEach(function() {
+    const raw = {
+      id: 1,
+      answers: {
+        edges: []
+      },
+      form: {
+        questions: {
+          edges: [
+            {
+              node: {
+                slug: "question-1",
+                label: "Test",
+                isRequired: "true",
+                isHidden: "true",
+                __typename: "TextQuestion"
+              }
+            }
+          ]
+        }
+      }
+    };
+
+    const document = Document.create(this.owner.ownerInjection(), { raw });
+    this.set("field", document.fields[0]);
+  });
+
   test("it renders", async function(assert) {
     assert.expect(2);
 
-    await render(hbs`
-      {{cf-field/label
-        field=(hash
-          question=(hash
-            label="Test"
-          )
-        )
-      }}
-    `);
+    await render(hbs`{{cf-field/label field=field}}`);
 
     assert.dom("label").hasClass("uk-form-label");
     assert.dom("label").hasText("Test");
@@ -27,21 +46,14 @@ module("Integration | Component | cf-field/label", function(hooks) {
   test("it marks optional fields as such", async function(assert) {
     assert.expect(2);
 
-    this.set(
-      "question",
-      Question.create({ isRequired: "true", label: "Test" })
-    );
+    await render(hbs`{{cf-field/label field=field}}`);
 
-    await render(hbs`
-      {{cf-field/label
-        field=(hash question=question)
-      }}
-    `);
-
+    await this.field.question.optionalTask.perform();
     assert.dom("label").hasText("Test");
 
-    this.set("question.isRequired", "false");
+    this.set("field.question.isRequired", "false");
 
+    await this.field.question.optionalTask.perform();
     await settled();
 
     assert.dom("label").hasText("Test (Optional)");
