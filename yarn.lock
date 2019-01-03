@@ -4554,10 +4554,10 @@ ember-cli-clipboard@^0.9.0:
     ember-cli-htmlbars "^2.0.2"
     fastboot-transform "0.1.1"
 
-ember-cli-code-coverage@1.0.0-beta.6:
-  version "1.0.0-beta.6"
-  resolved "https://registry.yarnpkg.com/ember-cli-code-coverage/-/ember-cli-code-coverage-1.0.0-beta.6.tgz#7da5dc4e2eb7c207b827b6cbdf91a96d0cca0983"
-  integrity sha512-Iiu1Cll3QnnfTxTHOb32YtOEvkktia9xZO2YQDPbCqJo0x/l5SsUH6ve+lxDUUOs1E4/fItP0Fk+WGCKMFnJDw==
+ember-cli-code-coverage@1.0.0-beta.8:
+  version "1.0.0-beta.8"
+  resolved "https://registry.yarnpkg.com/ember-cli-code-coverage/-/ember-cli-code-coverage-1.0.0-beta.8.tgz#e24abd751be5abababb29400f4ad61ef5fb1c385"
+  integrity sha512-9MXbaM0iIfTJT5HFrT9v0XouykZu3EKnrz7YiZNRd6JPMr7aBbZTX7ScHUD9OnsuCfuuzgeHE0nUNoU/NGoNDg==
   dependencies:
     babel-plugin-istanbul "^5.1.0"
     babel-plugin-transform-async-to-generator "^6.24.1"
@@ -5123,24 +5123,6 @@ ember-fetch-adapter@^0.4.3:
   integrity sha1-w9Lag/+H+CmrNHuEGjIBs8x+HrQ=
   dependencies:
     ember-cli-babel "^6.12.0"
-
-ember-fetch@6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/ember-fetch/-/ember-fetch-6.0.0.tgz#a88c6f2436413e4e397651e1ed60e07f0e7c9d17"
-  integrity sha512-sqCBc5k/gFkUoC4nEl4IkgT6aLRBg7UQWcUDBqpfZy+rkPKxwzZROjJtCPlwCZg5PmZysV5TptaWNcs8r0g75Q==
-  dependencies:
-    abortcontroller-polyfill "^1.1.9"
-    babel-core "^6.26.3"
-    babel-preset-env "^1.7.0"
-    broccoli-concat "^3.2.2"
-    broccoli-merge-trees "^3.0.0"
-    broccoli-rollup "^2.1.1"
-    broccoli-stew "^2.0.0"
-    broccoli-templater "^2.0.1"
-    ember-cli-babel "^6.8.2"
-    node-fetch "^2.0.0-alpha.9"
-    rollup-plugin-babel "^3.0.7"
-    whatwg-fetch "^3.0.0"
 
 ember-fetch@6.1.0:
   version "6.1.0"
