@@ -34,7 +34,7 @@
     "ember-fetch": "6.1.0",
     "ember-intl": "3.5.0",
     "ember-promise-helpers": "1.0.6",
-    "ember-validators": "1.2.1",
+    "ember-validators": "1.2.3",
     "jexl": "1.1.4",
     "sass": "1.14.3"
   },

@@ -5510,10 +5510,10 @@ ember-uikit@0.7.1:
     ember-toggle "^5.3.0"
     uikit "^3.0.0-beta.38"
 
-ember-validators@1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/ember-validators/-/ember-validators-1.2.1.tgz#0acfd831afb3a2fd32d74ab5ac35df58bff2ce11"
-  integrity sha512-U3tPH+FMBxwulswxMoiOibZ4TL2wjYFmXOuFaSJDgf/EzTEdT7dl/PiwsPJoy1ViBvQXPKvmb+/NMQSgJ8Jfaw==
+ember-validators@1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/ember-validators/-/ember-validators-1.2.3.tgz#6af92c5e34d7c517e16a6b2279343e8bcfe7a38d"
+  integrity sha512-ZWcnvEI0fy+nhaNOrFKTPbRP1G9rwhRj6UwqUkErCe2Jb3ZojNRs30V00KwTAHvBgebGoQ2KTF/eE692NwwFGg==
   dependencies:
     ember-cli-babel "^6.9.2"
     ember-require-module "^0.2.0"
