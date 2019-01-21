@@ -79,6 +79,10 @@
     "prettier": "1.14.3",
     "qunit-dom": "0.8.0"
   },
+  "resolutions": {
+    "//": "Needed till https://github.com/salesforce/tough-cookie/issues/140 is fixed or Node 6 is end of life",
+    "**/tough-cookie": "~2.4.0"
+  },
   "engines": {
     "node": "6.* || 8.* || >= 10.*"
   },
