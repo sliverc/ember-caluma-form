@@ -16,4 +16,4 @@ You can find the interactive documentation [here](https://projectcaluma.github.i
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE.md).
+This project is licensed under the [MIT License](LICENSE).
