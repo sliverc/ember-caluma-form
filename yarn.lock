@@ -5025,7 +5025,16 @@ ember-composable-helpers@2.1.0, ember-composable-helpers@^2.1.0:
     broccoli-funnel "^1.0.1"
     ember-cli-babel "^6.6.0"
 
-ember-concurrency@0.8.22, ember-concurrency@^0.8.21:
+ember-concurrency@0.8.27:
+  version "0.8.27"
+  resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-0.8.27.tgz#6dd1b9928cf5d13d5ae9c8cd3d5869f6ff81a9a9"
+  integrity sha512-2IujJ0Y79a+sHvEOPhUtZ7Ga8HDrwjbQqO7aZ88b0KCsXPro7birQFB508njQSQ0mxrsR9qzDv/KS5V67Cy5dA==
+  dependencies:
+    babel-core "^6.24.1"
+    ember-cli-babel "^6.8.2"
+    ember-maybe-import-regenerator "^0.1.5"
+
+ember-concurrency@^0.8.21:
   version "0.8.22"
   resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-0.8.22.tgz#900e870aae486e1f5fcb168bbb4efba02561a5ad"
   integrity sha512-njLqyjMxBf8fapIV8WPyG2gFbSCIQgMpk33uSs5Ih7HsfFAz60KwVo9sMVPBYAJwQmF8jFPm7Ph+mjkiQXHmmA==
@@ -12047,7 +12056,7 @@ topo@2.x.x:
   dependencies:
     hoek "4.x.x"
 
-tough-cookie@>=0.12.0, tough-cookie@>=2.3.3, tough-cookie@^2.3.4, tough-cookie@~2.4.3:
+tough-cookie@>=0.12.0, tough-cookie@>=2.3.3, tough-cookie@^2.3.4, tough-cookie@~2.4.0, tough-cookie@~2.4.3:
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-2.4.3.tgz#53f36da3f47783b0925afa06ff9f3b165280f781"
   integrity sha512-Q5srk/4vDM54WJsJio3XNn6K2sCG+CQ8G5Wz6bZhRZoAe/+TxjWB/GlFAnYEbkYVlON9FMk/fE3h2RLpPXo4lQ==
